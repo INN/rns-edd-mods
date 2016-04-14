@@ -64,17 +64,21 @@ class RNS_Subscriber_Extras {
 	 * @param $content string the incoming content
 	 * @return string the content with the download links
 	 */
-	function output_download_link($content){
-
-		if( is_singular('post') ){
-			$dl_post_id = get_post_meta(get_the_ID(), '_edd_download_post', true);
-			$is_restricted = get_post_meta(get_the_ID(), '_rns_not_for_republication', true);
-			if($dl_post_id && ! $is_restricted){
-				if(function_exists('rcp_is_active') && rcp_is_active()){
+	function output_download_link( $content ) {
+		
+		$pr_term = get_term_by( 'slug', 'press-releases', 'post-type' );
+		$is_press_release = ( isset( $_POST['tax_input']['post-type'] ) && array_search( $pr_term->term_id, $_POST['tax_input']['post-type'] ) ) ? FALSE : TRUE;
+		
+		if( is_singular( 'post' ) && ! $is_press_release ) {
+			$dl_post_id = get_post_meta( get_the_ID(), '_edd_download_post', true );
+			$is_restricted = get_post_meta( get_the_ID(), '_rns_not_for_republication', true );
+			
+			if( $dl_post_id && ! $is_restricted ) {
+				if( function_exists( 'rcp_is_active' ) && rcp_is_active() ) {
 
 					$new = '<div id="rns-subscriber-purchase" class="well well-small alignleft">';
-					$new .= sprintf('<span>%s</span>', __('This story is available for republication.', 'rns-subscriber-enhancements'));
-					$new .= sprintf('[purchase_link id="%d" text="%s" style="button"]', $dl_post_id, __('Download Now', 'rns-subscriber-enhancements'));
+					$new .= sprintf( '<span>%s</span>', __( 'This story is available for republication.', 'rns-subscriber-enhancements' ) );
+					$new .= sprintf( '[purchase_link id="%d" text="%s" style="button"]', $dl_post_id, __( 'Download Now', 'rns-subscriber-enhancements' ) );
 					$new .= '</div>';
 					$content = $content . $new;
 
@@ -87,25 +91,25 @@ class RNS_Subscriber_Extras {
 		}
 		return $content;
 	}
+	
 
 	/**
 	 * check_dl_post checks if a post has a download post and creates one if not
 	 */
-	function check_dl_post(){
+	function check_dl_post() {
 
-		if(! is_singular('post')){
+		if( ! is_singular( 'post' ) ) {
 			return;
 		}
 
-		if( ! function_exists( 'rcp_is_active' ) || ! rcp_is_active() ){
+		if( ! function_exists( 'rcp_is_active' ) || ! rcp_is_active() ) {
 			return;
 		}
 
+		$dl_post_id = get_post_meta( get_the_ID(), '_edd_download_post', true );
 
-		$dl_post_id = get_post_meta(get_the_ID(), '_edd_download_post', true);
-
-		if(!$dl_post_id){
-			self::create_download_post(get_post(get_the_ID()));
+		if( !$dl_post_id ) {
+			self::create_download_post( get_post( get_the_ID() ) );
 		}
 
 	}
@@ -113,7 +117,7 @@ class RNS_Subscriber_Extras {
 	/**
 	 * checks if the image has download post, creating if needed
 	 */
-	function check_img_attachments(){
+	function check_img_attachments() {
 		if(!is_attachment()){
 			return;
 		}
