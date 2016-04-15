@@ -52,7 +52,7 @@ class Paywall {
 	 * @since 1.6.0
 	 * @var string
 	 */
-	private $subscription_required_message = 'Active RNS subscribers and members can view this content&nbsp;<a href="http://archives.religionnews.com" target="_blank">at the RNS Archives website</a>.';
+	private $subscription_required_message = 'Active RNS subscribers and members can view this content <a href="/wp-login.php">by logging-in here</a>.';
 
 	/**
 	 * Warning shown to capable users that content is behind the paywall.
