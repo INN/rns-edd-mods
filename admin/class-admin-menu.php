@@ -59,7 +59,7 @@ class Admin_Menu {
 	 * Initialize the class
 	 */
 	private function __construct() {
-		add_action( 'admin_menu', array( $this, 'add_plugin_admin_menu' ) );
+		//add_action( 'admin_menu', array( $this, 'add_plugin_admin_menu' ) );
 	}
 
 	/**

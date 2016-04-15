@@ -143,15 +143,15 @@ class RNS_Global {
 		// add_filter( 'TODO', array( $this, 'filter_method_name' ) );
 
     /* Content oversight */
-    add_filter( 'cmb_meta_boxes', array( $this, 'content_oversight_metabox' ) );
-    add_filter( 'the_content', array( $this, 'content_oversight_messages' ), 999 );
-    add_filter( 'the_excerpt', array( $this, 'content_oversight_messages' ), 999 );
+    //add_filter( 'cmb_meta_boxes', array( $this, 'content_oversight_metabox' ) );
+    //add_filter( 'the_content', array( $this, 'content_oversight_messages' ), 999 );
+    //add_filter( 'the_excerpt', array( $this, 'content_oversight_messages' ), 999 );
 
     /* Post utilities */
-    add_filter( 'cmb_meta_boxes', array( $this, 'post_utilities_metabox' ) );
+   // add_filter( 'cmb_meta_boxes', array( $this, 'post_utilities_metabox' ) );
 
     /* Comments with many links */
-    add_filter( 'comment_form_field_comment', array( $this, 'comments_with_many_links' ), 30 );
+    //add_filter( 'comment_form_field_comment', array( $this, 'comments_with_many_links' ), 30 );
 
     /**
      * Per Debra, links in comments should not be clickable
@@ -159,55 +159,55 @@ class RNS_Global {
      * @see  wp-includes/default-filters.php
      * @see  make_clickable() in wp-includes/formatting.php
      */
-    remove_filter( 'comment_text', 'make_clickable', 9 );
+    //remove_filter( 'comment_text', 'make_clickable', 9 );
 
     /* Search-by-author */
     // add_filter( 'posts_search', array( $this, 'db_filter_authors_search' ) );
 
     /* Condense "My Sites" list for super admins */
-    add_action( 'admin_footer', array( $this, 'condense_my_sites_list' ) );
+    //add_action( 'admin_footer', array( $this, 'condense_my_sites_list' ) );
 
     /* Distribute authors to hubs */
-    add_action( 'transition_post_status', array( $this, 'add_authors_to_hubs' ), 90, 3 );
+    //add_action( 'transition_post_status', array( $this, 'add_authors_to_hubs' ), 90, 3 );
 
     /* Monitor users added to blogs */
     // add_action( 'add_user_to_blog', array( $this, 'add_user_to_blog_alert' ), 100, 3 );
 
     /* CC editors or administrators on new-comment notifications */
-    add_action( 'admin_init', array( $this, 'acn_init' ) );
-    add_filter( 'comment_notification_headers', array( $this, 'filter_comment_notification_headers' ) );
+    //add_action( 'admin_init', array( $this, 'acn_init' ) );
+    //add_filter( 'comment_notification_headers', array( $this, 'filter_comment_notification_headers' ) );
 
     /* Register P2P connection for Campaigns */
-    add_action( 'p2p_init', array( $this, 'p2p_register_campaigns_to_posts' ) );
+    //add_action( 'p2p_init', array( $this, 'p2p_register_campaigns_to_posts' ) );
 
     /* Disable Guest Author functionality */
-    add_filter( 'coauthors_guest_authors_enabled', '__return_false' );
+    //add_filter( 'coauthors_guest_authors_enabled', '__return_false' );
 
     /* Remove WordPress SEO fields from user profiles */
-    add_action( 'show_user_profile', array( $this, 'remove_wpseo_profile_fields' ), 1 );
-    add_action( 'edit_user_profile', array( $this, 'remove_wpseo_profile_fields' ), 1 );
+    //add_action( 'show_user_profile', array( $this, 'remove_wpseo_profile_fields' ), 1 );
+    //add_action( 'edit_user_profile', array( $this, 'remove_wpseo_profile_fields' ), 1 );
 
     /* Tweetable "via" handle */
-    add_filter( 'option_tweetable', array( $this, 'tweetable_username_fallback' ), 30 );
+    //add_filter( 'option_tweetable', array( $this, 'tweetable_username_fallback' ), 30 );
 
     /* Additional WordPress SEO tags */
-    add_action( 'wpseo_head', array( $this, 'pinterest_article_author_tag' ), 100 );
+    //add_action( 'wpseo_head', array( $this, 'pinterest_article_author_tag' ), 100 );
 
-    	add_action( 'admin_footer', array( $this, 'hide_category_picker' ) );
+    //	add_action( 'admin_footer', array( $this, 'hide_category_picker' ) );
 
-    	add_action( 'pre_option_akismet_discard_month', array( $this, 'akismet_discard_month' ) );
+    //	add_action( 'pre_option_akismet_discard_month', array( $this, 'akismet_discard_month' ) );
 
-		add_filter( 'user_contactmethods', array( $this, 'contactmethods' ), 20 );
+	//	add_filter( 'user_contactmethods', array( $this, 'contactmethods' ), 20 );
 
-		add_action( 'admin_init', array( $this, 'additional_info_metabox' ) );
-		add_filter( 'rns_additional_info_fields', array( $this, 'long_description_field' ) );
+	//	add_action( 'admin_init', array( $this, 'additional_info_metabox' ) );
+	//	add_filter( 'rns_additional_info_fields', array( $this, 'long_description_field' ) );
 
-		add_action( 'admin_init', array( $this, 'primary_blog_id_metabox' ) );
+	//	add_action( 'admin_init', array( $this, 'primary_blog_id_metabox' ) );
 
-		add_filter( 'rns_wpseo_location_archive_title', array( $this, 'wpseo_location_archive_title' ), 30, 2 );
+	//	add_filter( 'rns_wpseo_location_archive_title', array( $this, 'wpseo_location_archive_title' ), 30, 2 );
 
 		/* Do not send notifications of comments awaiting approval */
-		add_filter( 'pre_option_moderation_notify', '__return_zero' );
+	//	add_filter( 'pre_option_moderation_notify', '__return_zero' );
 
 	}
 

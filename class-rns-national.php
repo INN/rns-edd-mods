@@ -58,10 +58,10 @@ class RNS_National {
 	private $hub_syndication_feed_slug = 'd5e2186e34e1cf33';
 
 	public function __construct() {
-		add_action( 'load-post-new.php', array( $this, 'check_on_usergroups' ), 999 );
-		add_filter( 'rns_register_campaigns_to_posts', array( $this, 'add_introduction_field_to_campaigns' ) );
-		add_action( 'init', array( $this, 'add_hub_syndication_feed' ) );
-		add_action( 'pre_option_rss_use_excerpt', array( $this, 'syndicate_full_content_to_hubs' ) );
+		//add_action( 'load-post-new.php', array( $this, 'check_on_usergroups' ), 999 );
+		//add_filter( 'rns_register_campaigns_to_posts', array( $this, 'add_introduction_field_to_campaigns' ) );
+		//add_action( 'init', array( $this, 'add_hub_syndication_feed' ) );
+		//add_action( 'pre_option_rss_use_excerpt', array( $this, 'syndicate_full_content_to_hubs' ) );
 
 	    /**
 	     * Limit Co-Authors Plus to querying taxonomies, not post authors
@@ -71,14 +71,14 @@ class RNS_National {
 	     * @since 1.5.0
 	     */
 	    // if ( ! is_admin() ) {
-	    add_filter( 'coauthors_plus_should_query_post_author', '__return_false' );
+	    //add_filter( 'coauthors_plus_should_query_post_author', '__return_false' );
 		// }
 
-	    add_filter( 'wpseo_title', array( $this, 'wpseo_title' ) );
+	    //add_filter( 'wpseo_title', array( $this, 'wpseo_title' ) );
 
-	    add_filter( 'rns_additional_info_fields', array( $this, 'additional_user_fields' ) );
+	    //add_filter( 'rns_additional_info_fields', array( $this, 'additional_user_fields' ) );
 
-	    add_action( 'admin_init', array( $this, 'remove_form_button' ), 9999 );
+	    //add_action( 'admin_init', array( $this, 'remove_form_button' ), 9999 );
 
 	}
 
