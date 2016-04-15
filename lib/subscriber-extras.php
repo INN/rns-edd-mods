@@ -66,10 +66,12 @@ class RNS_Subscriber_Extras {
 	 */
 	function output_download_link( $content ) {
 		
+		// figure out if we're looking at a press release
 		$pr_term = get_term_by( 'slug', 'press-releases', 'post-type' );
-		$is_press_release = ( isset( $_POST['tax_input']['post-type'] ) && array_search( $pr_term->term_id, $_POST['tax_input']['post-type'] ) ) ? FALSE : TRUE;
+		$post_terms = wp_get_post_terms( get_the_id(), 'post-type' ); 
+		$is_press_release = array_search( $pr_term, $post_terms ); // will be false if term is not found, 0 otherwise
 		
-		if( is_singular( 'post' ) && ! $is_press_release ) {
+		if( is_singular( 'post' ) && ( $is_press_release === false ) ) {
 			$dl_post_id = get_post_meta( get_the_ID(), '_edd_download_post', true );
 			$is_restricted = get_post_meta( get_the_ID(), '_rns_not_for_republication', true );
 			
