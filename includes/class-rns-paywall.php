@@ -13,22 +13,6 @@ class Paywall {
 	protected static $instance = null;
 
 	/**
-	 * The capability allowing a user to bypass the archive.
-	 *
-	 * @since 1.6.0
-	 * @var string
-	 */
-	private $bypass_paywall_cap = 'rns_bypass_paywall';
-
-	/**
-	 * The capability a user needs to be shown the paywall warning message.
-	 *
-	 * @since 1.6.0
-	 * @var string
-	 */
-	private $paywall_warning_cap = 'edit_posts';
-
-	/**
 	 * Length of time in seconds for which content remains outside the paywall.
 	 *
 	 * 31536000 == 1 year.
@@ -79,7 +63,6 @@ class Paywall {
 	 * @since 1.6.0
 	 */
 	private function __construct() {
-		add_filter( 'members_get_capabilities', array( $this, 'add_cap' ) );
 		add_filter( 'the_content', array( $this, 'filter_content' ) );
 	}
 
@@ -97,16 +80,6 @@ class Paywall {
 	}
 
 	/**
-	 * Getter for $bypass_paywall_cap.
-	 *
-	 * @since 1.6.0
-	 * @return string
-	 */
-	public function get_bypass_paywall_cap() {
-		return $this->bypass_paywall_cap;		
-	}
-
-	/**
 	 * Getter for $exempt_from_paywall_key.
 	 *
 	 * @since 1.6.0
@@ -114,18 +87,6 @@ class Paywall {
 	 */
 	public function get_exempt_from_paywall_key() {
 		return $this->exempt_from_paywall_key;	
-	}
-
-	/**
-	 * Add the rns_bypass_paywall capability via the Members plugin.
-	 *
-	 * @since 1.6.0
-	 * @param array $capabilities The array of available capabilities
-	 * @return array The updated array
-	 */
-	public function add_cap( $capabilities ) {
-		$capabilities[] = $this->bypass_paywall_cap;
-		return $capabilities;
 	}
 
 	/**
@@ -170,7 +131,7 @@ class Paywall {
 	 * @return string
 	 */
 	private function paywall_warning() {
-		return sprintf( '<p style="background-color: #c60f13; color: white; padding: 5px;"><strong>%s</strong></p>', $this->behind_paywall_warning );
+		return sprintf( '<div class="alert-wrapper" style="clear:both; padding: 20px"><div class="alert-container"><p style="margin-bottom: 0;">%s</p></div></div>', $this->behind_paywall_warning );
 	}
 
 	/**
@@ -220,18 +181,18 @@ class Paywall {
 	 * @return string          The full post content or a preview
 	 */
 	public function filter_content( $content ) {
-		if ( $this->is_exempt_from_paywall() ) {
+		if ( $this->is_exempt_from_paywall() || is_user_logged_in() ) {
 			return $content;
 		}
 
 		$warning = '';
 
 		if ( $this->is_behind_paywall() && is_single() ) {
-			if ( ! current_user_can( $this->bypass_paywall_cap ) ) {
+			if ( ! is_user_logged_in() ) {
 				$content = $this->subscription_required();
 				$content .= $this->generate_preview();
 			}
-			if ( current_user_can( $this->paywall_warning_cap ) ) {
+			if ( current_user_can( 'edit_others_posts' ) ) {
 				$warning = $this->paywall_warning();
 			}
 		}
