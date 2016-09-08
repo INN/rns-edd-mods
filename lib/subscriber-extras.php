@@ -15,10 +15,10 @@ class RNS_Subscriber_Extras {
 		}
 		if(class_exists( 'Easy_Digital_Downloads' )){
 			//check that EDD is enabled
-			// creates the downloads posts
-			add_action('transition_post_status', array($this, 'auto_create_downloads'), 10, 3);
+			// creates the downloads posts (only when post is originally published)
+			add_action( 'publish_post', array( $this, 'auto_create_downloads' ), 10, 3 );
 			// updates the download posts on save
-			add_action('save_post', array($this, 'update_downloads'), 10, 2);
+			add_action( 'save_post', array ($this, 'update_downloads' ), 10, 2 );
 
 			add_filter('rns-subscriber-enhancements-post-image-number', array($this, 'normalize_array_keys'));
 			add_filter('rns-edd-mods-content-html', array( $this, 'cleanup_html'), 10, 1);
